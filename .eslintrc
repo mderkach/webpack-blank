@@ -5,14 +5,16 @@
     "airbnb-typescript-prettier",
     "prettier",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
     "plugin:promise/recommended",
     "eslint:recommended"
   ],
   "overrides": [
     {
       "files": ["*.js", "*.jsx"],
-      "parser": "@babel/eslint-parser"
+      "parser": "@babel/eslint-parser",
+      "parserOptions": {
+        "requieConfigFile": false
+      }
     }
   ],
   "parser": "@typescript-eslint/parser",
@@ -46,7 +48,6 @@
       "error",
       "unix"
     ],
-    "@typescript-eslint/ban-ts-ignore": "warn",
     "@typescript-eslint/ban-ts-comment": "warn",
     "@typescript-eslint/no-use-before-define": "off",
     "react/prop-types": "off",
