@@ -1,0 +1,14 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-empty": [
+      0,
+      "always"
+    ],
+    "header-max-length": [
+      2,
+      "always",
+      "250"
+    ]
+  }
+}

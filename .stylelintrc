@@ -1,0 +1,61 @@
+{
+  "customSyntax": "postcss-scss",
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-order-config-standard",
+    "stylelint-prettier/recommended",
+    "stylelint-config-prettier",
+    "stylelint-config-standard-scss",
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-hudochenkov/full"
+  ],
+  "plugins": ["stylelint-prettier", "stylelint-scss", "stylelint-order"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "linebreaks": "unix",
+    "max-nesting-depth": null,
+    "selector-max-type": null,
+    "string-quotes": "single",
+    "indentation": 2,
+    "selector-max-id": 2,
+    "prettier/prettier": null,
+    "selector-class-pattern": "^.*$",
+    "order/properties-alphabetical-order": null,
+    "selector-max-compound-selectors": null,
+    "no-descending-specificity": null,
+    "scss/dollar-variable-pattern": null,
+    "scss/at-mixin-argumentless-call-parentheses": "always",
+    "block-closing-brace-newline-after": [
+      "always",
+      {
+        "ignoreAtRules": ["if", "else"]
+      }
+    ],
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["after-same-name", "inside-block", "first-nested"],
+        "ignoreAtRules": ["if", "else"]
+      }
+    ],
+    "time-min-milliseconds": null,
+    "declaration-no-important": null,
+    "scss/at-extend-no-missing-placeholder": null,
+    "function-name-case": null,
+    "scss/at-function-pattern": null,
+    "selector-no-qualifying-type": null,
+    "property-no-unknown": [true, {
+      "ignoreProperties": ["font-named-instance"]
+    }],
+    "color-hex-case": "upper",
+    "declaration-block-no-redundant-longhand-properties": [
+      true,
+      {
+        "ignoreShorthands": [
+          "/grid/"
+        ]
+      }
+    ]
+  },
+  "ignoreFiles": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"]
+}

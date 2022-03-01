@@ -1,0 +1,8 @@
+{
+  "src/**/*.{ts,tsx}": [
+    "eslint --cache --fix"
+  ],
+  "src/**/*.{css,scss,sass}": [
+    "stylelint --fix"
+  ]
+}
