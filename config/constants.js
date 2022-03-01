@@ -46,6 +46,7 @@ module.exports = {
   jsConfig: resolveApp('jsconfig.json'),
   webpackCache: resolveApp('node_modules/.cache'),
   tsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
+  postCSS: resolveModule(resolveApp, 'config/postcss.config'),
   publicUrlOrPath,
 };
 

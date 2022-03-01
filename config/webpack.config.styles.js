@@ -1,19 +1,22 @@
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { publicUrlOrPath, src } = require('./constants');
+const { publicUrlOrPath, src, postCSS } = require('./constants');
 
 module.exports = function (cssOptions, preProcessor) {
-  const isDevelopment = process.argv.mode === 'development';
   const isProduction = process.argv.mode === 'production';
 
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isDevelopment && 'style-loader',
-      isProduction && {
+      !isProduction ? 'style-loader' : {
         loader: MiniCssExtractPlugin.loader,
         // css is located in `static/css`, use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
         options: publicUrlOrPath.startsWith('.')
-          ? { publicPath: '../../' }
+          ? {
+              publicPath: (resourcePath, context) => {
+                return path.relative(path.dirname(resourcePath), context) + '/';
+              },
+            }
           : {},
       },
       {
@@ -25,7 +28,7 @@ module.exports = function (cssOptions, preProcessor) {
         options: {
           sourceMap: true,
           postcssOptions: {
-            config:'./postcss.config.js',
+            config: postCSS,
           },
         },
       },
@@ -51,4 +54,4 @@ module.exports = function (cssOptions, preProcessor) {
   };
 
   return getStyleLoaders(cssOptions, preProcessor);
-}
+};

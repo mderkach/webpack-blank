@@ -214,7 +214,7 @@ module.exports = function () {
     },
     plugins: [
       new SpriteLoaderPlugin({ plainSprite: true }),
-      new MiniCssExtractPlugin({
+      isProduction && new MiniCssExtractPlugin({
         filename: `./css/[name].[hash:8].css`,
         chunkFilename: `./css/[name]-chunk.[hash:8].css`,
       }),
