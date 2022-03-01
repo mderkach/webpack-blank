@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { ESBuildMinifyPlugin } = require('esbuild-loader');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const { extendDefaultPlugins } = require('svgo');
 const BaseConfig = require('./webpack.config');
 
 const prodWebpackConfig = merge(BaseConfig, {
@@ -20,8 +19,8 @@ const prodWebpackConfig = merge(BaseConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `./css/[name].[hash:8].css`,
-      chunkFilename: `./css/[name]-chunk.[hash:8].css`,
+      filename: `./css/[name].[fullhash:8].css`,
+      chunkFilename: `./css/[name]-chunk.[fullhash:8].css`,
     }),
   ].filter(Boolean),
   optimization: {
@@ -64,7 +63,8 @@ const prodWebpackConfig = merge(BaseConfig, {
               [
                 'svgo',
                 {
-                  plugins: extendDefaultPlugins([
+                  plugins: [
+                    'preset-default',
                     {
                       name: 'removeViewBox',
                       active: false,
@@ -75,7 +75,7 @@ const prodWebpackConfig = merge(BaseConfig, {
                         attributes: [{ xmlns: 'http://www.w3.org/2000/svg' }],
                       },
                     },
-                  ]),
+                  ],
                 },
               ],
             ],

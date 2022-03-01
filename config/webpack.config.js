@@ -41,8 +41,8 @@ module.exports = {
   },
   output: {
     path: dist,
-    filename: './js/[name].[hash:8].js',
-    chunkFilename: './js/[name].[contenthash:8].chunk.js',
+    filename: './js/[name].[fullhash:8].js',
+    chunkFilename: './js/[name].[fullhash:8].chunk.js',
     publicPath: 'auto',
     clean: true,
     assetModuleFilename: (module) => {

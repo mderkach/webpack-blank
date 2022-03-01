@@ -2,19 +2,19 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { publicUrlOrPath, src, postCSS } = require('./constants');
 
+// eslint-disable-next-line func-names
 module.exports = function (cssOptions, preProcessor) {
   const isProduction = process.argv.mode === 'production';
 
+  // eslint-disable-next-line no-shadow
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
       !isProduction ? 'style-loader' : {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
-        // in production `paths.publicUrlOrPath` can be a relative path
         options: publicUrlOrPath.startsWith('.')
           ? {
               publicPath: (resourcePath, context) => {
-                return path.relative(path.dirname(resourcePath), context) + '/';
+                return `${path.relative(path.dirname(resourcePath), context)  }/`;
               },
             }
           : {},
