@@ -22,7 +22,7 @@ const prodWebpackConfig = merge(BaseConfig, {
       filename: `./css/[name].[fullhash:8].css`,
       chunkFilename: `./css/[name]-chunk.[fullhash:8].css`,
     }),
-  ].filter(Boolean),
+  ],
   optimization: {
     minimize: true,
     minimizer: [
@@ -53,13 +53,10 @@ const prodWebpackConfig = merge(BaseConfig, {
         minimizer: {
           implementation: ImageMinimizerPlugin.imageminMinify,
           options: {
-            // Lossless optimization with custom option
-            // Feel free to experiment with options for better result for you
             plugins: [
               ['gifsicle', { interlaced: true }],
               ['jpegtran', { progressive: true }],
               ['optipng', { optimizationLevel: 5 }],
-              // Svgo configuration here https://github.com/svg/svgo#configuration
               [
                 'svgo',
                 {

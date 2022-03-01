@@ -230,5 +230,5 @@ module.exports = {
       cwd: appPath,
       resolvePluginsRelativeTo: __dirname,
     }),
-  ].filter(Boolean),
+  ],
 };

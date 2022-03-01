@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const path = require('path');
 const chalk = require('react-dev-utils/chalk');
@@ -13,7 +11,7 @@ const { src, jsConfig, tsConfig, nodeModules, appPath } = require('./constants')
  * @param {Object} options
  */
 function getAdditionalModulePaths(options = {}) {
-  const baseUrl = options.baseUrl;
+  const { baseUrl } = options;
 
   if (!baseUrl) {
     return '';
@@ -56,7 +54,7 @@ function getAdditionalModulePaths(options = {}) {
  * @param {*} options
  */
 function getWebpackAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const { baseUrl } = options;
 
   if (!baseUrl) {
     return {};
@@ -69,6 +67,8 @@ function getWebpackAliases(options = {}) {
       src,
     };
   }
+
+  return null;
 }
 
 /**
@@ -77,7 +77,7 @@ function getWebpackAliases(options = {}) {
  * @param {*} options
  */
 function getJestAliases(options = {}) {
-  const baseUrl = options.baseUrl;
+  const { baseUrl } = options;
 
   if (!baseUrl) {
     return {};
@@ -90,6 +90,8 @@ function getJestAliases(options = {}) {
       '^src/(.*)$': '<rootDir>/src/$1',
     };
   }
+
+  return null;
 }
 
 function getModules() {
@@ -109,6 +111,7 @@ function getModules() {
   // TypeScript project and set up the config
   // based on tsconfig.json
   if (hasTsConfig) {
+    // eslint-disable-next-line import/no-dynamic-require,global-require
     const ts = require(resolve.sync('typescript', {
       basedir: nodeModules,
     }));
@@ -116,6 +119,7 @@ function getModules() {
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
   } else if (hasJsConfig) {
+    // eslint-disable-next-line global-require,import/no-dynamic-require
     config = require(jsConfig);
   }
 
@@ -125,7 +129,7 @@ function getModules() {
   const additionalModulePaths = getAdditionalModulePaths(options);
 
   return {
-    additionalModulePaths: additionalModulePaths,
+    additionalModulePaths,
     webpackAliases: getWebpackAliases(options),
     jestAliases: getJestAliases(options),
     hasTsConfig,

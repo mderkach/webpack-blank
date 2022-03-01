@@ -43,7 +43,7 @@ const devWebpackConfig = merge(BaseConfig, {
         reload: false,
       }
     ),
-  ].filter(Boolean),
+  ],
 });
 
 module.exports = new Promise((resolve) => {

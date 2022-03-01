@@ -5,12 +5,13 @@ const mixins = require('postcss-mixins');
 const cssnano = require('cssnano');
 const nested = require('postcss-nested');
 const flexbugs = require('postcss-flexbugs-fixes');
-const preset = require('postcss-preset-env')
+const preset = require('postcss-preset-env');
 const normalize = require('postcss-normalize');
+const syntax = require('postcss-scss');
 
 module.exports = {
   ident: 'postcss',
-  syntax: require('postcss-scss'),
+  syntax,
   plugins: [
     flexbugs(),
     preset({

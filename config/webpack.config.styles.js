@@ -4,21 +4,23 @@ const { publicUrlOrPath, src, postCSS } = require('./constants');
 
 // eslint-disable-next-line func-names
 module.exports = function (cssOptions, preProcessor) {
-  const isProduction = process.argv.mode === 'production';
+  const isProduction = process.env.NODE_ENV === 'production';
 
   // eslint-disable-next-line no-shadow
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      !isProduction ? 'style-loader' : {
-        loader: MiniCssExtractPlugin.loader,
-        options: publicUrlOrPath.startsWith('.')
-          ? {
-              publicPath: (resourcePath, context) => {
-                return `${path.relative(path.dirname(resourcePath), context)  }/`;
-              },
-            }
-          : {},
-      },
+      !isProduction
+        ? 'style-loader'
+        : {
+            loader: MiniCssExtractPlugin.loader,
+            options: publicUrlOrPath.startsWith('.')
+              ? {
+                  publicPath: (resourcePath, context) => {
+                    return `${path.relative(path.dirname(resourcePath), context)  }/`;
+                  },
+                }
+              : {},
+          },
       {
         loader: 'css-loader',
         options: cssOptions,
@@ -32,7 +34,7 @@ module.exports = function (cssOptions, preProcessor) {
           },
         },
       },
-    ].filter(Boolean);
+    ];
     if (preProcessor) {
       loaders.push(
         {
@@ -50,6 +52,7 @@ module.exports = function (cssOptions, preProcessor) {
         }
       );
     }
+
     return loaders;
   };
 
