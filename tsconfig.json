@@ -1,31 +1,36 @@
 {
-  "compilerOptions":{
-    "target":"es2017",
-    "lib":[
+  "compilerOptions": {
+    "target": "es2017",
+    "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs":true,
-    "skipLibCheck":true,
-    "esModuleInterop":true,
-    "allowSyntheticDefaultImports":true,
-    "strict":true,
-    "forceConsistentCasingInFileNames":true,
-    "noFallthroughCasesInSwitch":true,
-    "module":"esnext",
-    "moduleResolution":"node",
-    "resolveJsonModule":true,
-    "isolatedModules":true,
-    "noEmit":true,
-    "jsx":"react-jsx",
-    "rootDir":".",
-    "baseUrl":"./src"
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "rootDir": ".",
+    "baseUrl": "./src",
+    "paths": {
+      "assets/*": [
+        "../assets/*"
+      ]
+    }
   },
-  "include":[
+  "include": [
     "./src"
   ],
-  "exclude":[
+  "exclude": [
     "./node_modules"
   ]
 }

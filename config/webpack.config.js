@@ -91,7 +91,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(pdf|jpg|png|gif|ico)$/,
+        test: /\.(jpg|png|gif|ico)$/,
         type: 'asset/resource',
       },
       {
