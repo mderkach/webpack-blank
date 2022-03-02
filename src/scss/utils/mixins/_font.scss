@@ -1,0 +1,17 @@
+// Default: For modern format fonts
+// Files Required: .woff, .woffs
+
+@mixin font-face(
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal,
+  $asset-pipeline: false
+) {
+  @font-face {
+    font-weight: $weight;
+    font-style: $style;
+    font-family: $font-family;
+    src: url('#{$file-path}.woff') format('woff'), url('#{$file-path}.woff2') format('woff2');
+  }
+}

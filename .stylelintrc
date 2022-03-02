@@ -34,8 +34,15 @@
     "at-rule-empty-line-before": [
       "always",
       {
-        "except": ["after-same-name", "inside-block", "first-nested"],
-        "ignoreAtRules": ["if", "else"]
+        "except": [
+          "after-same-name",
+          "inside-block",
+          "first-nested"
+        ],
+        "ignoreAtRules": [
+          "if",
+          "else"
+        ]
       }
     ],
     "time-min-milliseconds": null,
@@ -43,10 +50,16 @@
     "scss/at-extend-no-missing-placeholder": null,
     "function-name-case": null,
     "scss/at-function-pattern": null,
+    "scss/comment-no-empty": null,
     "selector-no-qualifying-type": null,
-    "property-no-unknown": [true, {
-      "ignoreProperties": ["font-named-instance"]
-    }],
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": [
+          "font-named-instance"
+        ]
+      }
+    ],
     "color-hex-case": "lower",
     "declaration-block-no-redundant-longhand-properties": [
       true,

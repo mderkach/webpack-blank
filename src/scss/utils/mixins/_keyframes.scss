@@ -1,0 +1,6 @@
+@mixin keyframes($name) {
+  /* stylelint-disable keyframes-name-pattern */
+  @keyframes #{$name} {
+    @content;
+  }
+}
