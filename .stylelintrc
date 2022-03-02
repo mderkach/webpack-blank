@@ -47,7 +47,7 @@
     "property-no-unknown": [true, {
       "ignoreProperties": ["font-named-instance"]
     }],
-    "color-hex-case": "upper",
+    "color-hex-case": "lower",
     "declaration-block-no-redundant-longhand-properties": [
       true,
       {

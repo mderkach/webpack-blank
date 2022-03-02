@@ -25,7 +25,8 @@
       "assets/*": [
         "../assets/*"
       ]
-    }
+    },
+    "types": ["webpack-env", "node"]
   },
   "include": [
     "./src"

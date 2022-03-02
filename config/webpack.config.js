@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const resolve = require('resolve');
+const CopyPlugin = require('copy-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
@@ -41,8 +42,8 @@ module.exports = {
   },
   output: {
     path: dist,
-    filename: './js/[name].[fullhash:8].js',
-    chunkFilename: './js/[name].[fullhash:8].chunk.js',
+    filename: './assets/js/[name].[fullhash:8].js',
+    chunkFilename: './assets/js/[name].[fullhash:8].chunk.js',
     publicPath: 'auto',
     clean: true,
     assetModuleFilename: (module) => {
@@ -91,8 +92,8 @@ module.exports = {
         },
       },
       {
-        test: /\.(jpg|png|gif|ico)$/,
-        type: 'asset/resource',
+        test: /\.(gif|png|jpe?g|webp)$/i,
+        type: 'asset',
       },
       {
         test: /\.(svg)$/,
@@ -229,6 +230,20 @@ module.exports = {
       cacheLocation: path.resolve(nodeModules, '.cache/.eslintcache'),
       cwd: appPath,
       resolvePluginsRelativeTo: __dirname,
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/assets/**/*',
+          to({ context, absoluteFilename }) {
+            const folderName = absoluteFilename
+              .substring(absoluteFilename.indexOf('src/'), absoluteFilename.lastIndexOf('/'))
+              .replace('src/', '');
+            return `${folderName}/[name][ext]`;
+          },
+        },
+      ],
+      options: { concurrency: 1000 },
     }),
   ],
 };

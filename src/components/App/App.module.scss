@@ -3,6 +3,13 @@
 @import '~sanitize.css/typography.css';
 
 .cls {
+  padding: 20px;
   background-color: #000;
-  color: #FFF;
+  color: #fff;
+}
+
+img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
 }

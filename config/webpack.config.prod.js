@@ -13,14 +13,14 @@ const prodWebpackConfig = merge(BaseConfig, {
     rules: [
       {
         test: /\.(gif|png|jpe?g|webp)$/i,
-        type: 'asset/resource',
+        type: 'asset',
       },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `./css/[name].[fullhash:8].css`,
-      chunkFilename: `./css/[name]-chunk.[fullhash:8].css`,
+      filename: `./assets/css/[name].[fullhash:8].css`,
+      chunkFilename: `./assets/css/[name]-chunk.[fullhash:8].css`,
     }),
   ],
   optimization: {
@@ -50,13 +50,14 @@ const prodWebpackConfig = merge(BaseConfig, {
         },
       }),
       new ImageMinimizerPlugin({
+        deleteOriginalAssets: false,
         minimizer: {
           implementation: ImageMinimizerPlugin.imageminMinify,
           options: {
             plugins: [
               ['gifsicle', { interlaced: true }],
               ['jpegtran', { progressive: true }],
-              ['optipng', { optimizationLevel: 5 }],
+              ['optipng', { optimizationLevel: 7 }],
               [
                 'svgo',
                 {
@@ -78,6 +79,22 @@ const prodWebpackConfig = merge(BaseConfig, {
             ],
           },
         },
+        generator: [
+          {
+            type: 'asset',
+            implementation: ImageMinimizerPlugin.imageminGenerate,
+            options: {
+              plugins: ['imagemin-webp'],
+            },
+          },
+          {
+            type: 'asset',
+            implementation: ImageMinimizerPlugin.imageminGenerate,
+            options: {
+              plugins: ['imagemin-avif'],
+            },
+          },
+        ],
       }),
     ],
   },
