@@ -3,14 +3,13 @@
 // resolve-url-loader without files breaks webpack, ensure you have them
 // you can manually add another formats
 
-@mixin font-face(
-  $font-family,
-  $file-path,
-  $weight: normal,
-  $style: normal,
-  $asset-pipeline: false
-) {
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $range: null) {
   @font-face {
+
+    @if $range {
+      unicode-range: $range;
+    }
+
     font-weight: $weight;
     font-style: $style;
     font-family: '#{$file-path}.woff2';

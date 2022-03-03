@@ -31,12 +31,12 @@
       $remainder: $remainder - $divisor;
       $quotient: $quotient + 1;
     }
-
+    /* stylelint-disable order/order */
     $result: $result * 10 + $quotient;
     $factor: $factor * 0.1;
     $remainder: $remainder * 10;
     $precision: $precision - 1;
-
+    /* stylelint-enable order/order */
     @if $precision < 0 and $remainder >= $divisor * 5 {
       $result: $result + 1;
     }

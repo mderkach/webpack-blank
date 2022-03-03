@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 const localIdent = require('./css.modules.config');
 const {
   src,
@@ -49,7 +50,7 @@ module.exports = {
     publicPath: publicUrlOrPath,
     clean: true,
     assetModuleFilename: (module) => {
-      let {filename} = module;
+      let { filename } = module;
       if (module.filename.includes('src/')) {
         filename = module.filename.replace('src/', '');
       }
@@ -189,13 +190,12 @@ module.exports = {
     ],
   },
   plugins: [
-    new SpriteLoaderPlugin({plainSprite: true}),
-    new HtmlWebpackPlugin(
-      ({
-        inject: false,
-        template: `${src}/index.html`,
-        ...(isProduction
-          ? {
+    new SpriteLoaderPlugin({ plainSprite: true }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: `${src}/index.html`,
+      ...(isProduction
+        ? {
             minify: {
               removeComments: true,
               collapseWhitespace: true,
@@ -209,9 +209,8 @@ module.exports = {
               minifyURLs: true,
             },
           }
-          : undefined)
-      }),
-    ),
+        : undefined),
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
       typescript: {
@@ -249,7 +248,6 @@ module.exports = {
       },
     }),
     new ESLintPlugin({
-      // Plugin options
       extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
       formatter: require.resolve('react-dev-utils/eslintFormatter'),
       eslintPath: require.resolve('eslint'),
@@ -259,6 +257,18 @@ module.exports = {
       fix: true,
       threads: true,
       cacheLocation: path.resolve(nodeModules, '.cache/.eslintcache'),
+      cwd: appPath,
+      resolvePluginsRelativeTo: __dirname,
+    }),
+    new StylelintPlugin({
+      extensions: ['css', 'scss', 'sass'],
+      eslintPath: require.resolve('stylelint'),
+      failOnError: true,
+      context: src,
+      cache: true,
+      fix: true,
+      threads: true,
+      cacheLocation: path.resolve(nodeModules, '.cache/.stylelintcache'),
       cwd: appPath,
       resolvePluginsRelativeTo: __dirname,
     }),

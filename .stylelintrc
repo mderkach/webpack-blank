@@ -2,9 +2,9 @@
   "customSyntax": "postcss-scss",
   "extends": [
     "stylelint-config-standard",
-    "stylelint-order-config-standard",
-    "stylelint-prettier/recommended",
     "stylelint-config-prettier",
+    "stylelint-prettier/recommended",
+    "stylelint-order-config-standard",
     "stylelint-config-standard-scss",
     "stylelint-config-sass-guidelines",
     "stylelint-config-hudochenkov/full"
@@ -61,14 +61,7 @@
       }
     ],
     "color-hex-case": "lower",
-    "declaration-block-no-redundant-longhand-properties": [
-      true,
-      {
-        "ignoreShorthands": [
-          "/grid/"
-        ]
-      }
-    ]
+    "declaration-block-no-redundant-longhand-properties": true
   },
   "ignoreFiles": ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"]
 }

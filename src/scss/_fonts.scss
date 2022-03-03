@@ -1,7 +1,37 @@
 @use './utils/mixins/font' as *;
 
-@include font-face('Rubick', '/assets/fonts/Rubick/rubick-light', 300, normal);
-@include font-face('Rubick', '/assets/fonts/Rubick/rubick-regular', 400, normal);
-@include font-face('Rubick', '/assets/fonts/Rubick/rubick-medium', 500, normal);
-@include font-face('Rubick', '/assets/fonts/Rubick/rubick-bold', 700, normal);
-@include font-face('Rubick', '/assets/fonts/Rubick/rubick-black', 900, normal);
+@include font-face(
+  'Rubick',
+  '/assets/fonts/Rubick/rubick-light',
+  300,
+  normal,
+  'U+20,U+49,U+4D,U+53,U+54,U+61-63,U+65,U+6B-6D,U+70,U+72-74,U+77'
+);
+@include font-face(
+  'Rubick',
+  '/assets/fonts/Rubick/rubick-regular',
+  400,
+  normal,
+  'U+20,U+49,U+4D,U+53,U+54,U+61-63,U+65,U+6B-6D,U+70,U+72-74,U+77'
+);
+@include font-face(
+  'Rubick',
+  '/assets/fonts/Rubick/rubick-medium',
+  500,
+  normal,
+  'U+20,U+49,U+4D,U+53,U+54,U+61-63,U+65,U+6B-6D,U+70,U+72-74,U+77'
+);
+@include font-face(
+  'Rubick',
+  '/assets/fonts/Rubick/rubick-bold',
+  700,
+  normal,
+  'U+20,U+49,U+4D,U+53,U+54,U+61-63,U+65,U+6B-6D,U+70,U+72-74,U+77'
+);
+@include font-face(
+  'Rubick',
+  '/assets/fonts/Rubick/rubick-black',
+  900,
+  normal,
+  'U+20,U+49,U+4D,U+53,U+54,U+61-63,U+65,U+6B-6D,U+70,U+72-74,U+77'
+);
