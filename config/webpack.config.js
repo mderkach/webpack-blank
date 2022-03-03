@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const resolve = require('resolve');
-const CopyPlugin = require('copy-webpack-plugin');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+// const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const localIdent = require('./css.modules.config');
 const {
   src,
   dist,
@@ -32,8 +32,10 @@ const env = getClientEnvironment(publicUrlOrPath.slice(0, -1));
 // style files regexes
 // const cssRegex = /\.css$/;
 // const cssModuleRegex = /\.module\.css$/;
-// const sassRegex = /\.(scss|sass)$/;
+const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   target: ['browserslist'],
@@ -44,10 +46,10 @@ module.exports = {
     path: dist,
     filename: './assets/js/[name].[fullhash:8].js',
     chunkFilename: './assets/js/[name].[fullhash:8].chunk.js',
-    publicPath: 'auto',
+    publicPath: publicUrlOrPath,
     clean: true,
     assetModuleFilename: (module) => {
-      let { filename } = module;
+      let {filename} = module;
       if (module.filename.includes('src/')) {
         filename = module.filename.replace('src/', '');
       }
@@ -156,6 +158,20 @@ module.exports = {
         type: 'asset/resource',
       },
       {
+        test: sassRegex,
+        exclude: sassModuleRegex,
+        use: styleLoaders(
+          {
+            importLoaders: 3,
+            sourceMap: true,
+            modules: {
+              mode: 'icss'
+            },
+          },
+          'sass-loader'
+        ),
+      },
+      {
         test: sassModuleRegex,
         use: styleLoaders(
           {
@@ -163,7 +179,7 @@ module.exports = {
             sourceMap: true,
             modules: {
               mode: 'local',
-              getLocalIdent: getCSSModuleLocalIdent,
+              getLocalIdent: localIdent,
             },
           },
           'sass-loader'
@@ -172,15 +188,29 @@ module.exports = {
     ],
   },
   plugins: [
-    new SpriteLoaderPlugin({ plainSprite: true }),
-    new HtmlWebpackPlugin({
-      title: 'app',
-      template: `${src}/index.html`,
-      minify: {
-        collapseWhitespace: true,
-      },
-      inject: false,
-    }),
+    new SpriteLoaderPlugin({plainSprite: true}),
+    new HtmlWebpackPlugin(
+      ({
+        inject: false,
+        template: `${src}/index.html`,
+        ...(isProduction
+          ? {
+            minify: {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true,
+            },
+          }
+          : undefined)
+      }),
+    ),
     new ForkTsCheckerWebpackPlugin({
       async: false,
       typescript: {
@@ -231,19 +261,20 @@ module.exports = {
       cwd: appPath,
       resolvePluginsRelativeTo: __dirname,
     }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: 'src/assets/**/*',
-          to({ context, absoluteFilename }) {
-            const folderName = absoluteFilename
-              .substring(absoluteFilename.indexOf('src/'), absoluteFilename.lastIndexOf('/'))
-              .replace('src/', '');
-            return `${folderName}/[name][ext]`;
-          },
-        },
-      ],
-      options: { concurrency: 1000 },
-    }),
+    // use it if you need to handle files without webpack
+    // new CopyPlugin({
+    //   patterns: [
+    //     {
+    //       from: 'src/assets/**/*',
+    //       to({ context, absoluteFilename }) {
+    //         const folderName = absoluteFilename
+    //           .substring(absoluteFilename.indexOf('src/'), absoluteFilename.lastIndexOf('/'))
+    //           .replace('src/', '');
+    //         return `${folderName}/[name][ext]`;
+    //       },
+    //     },
+    //   ],
+    //   options: { concurrency: 1000 },
+    // }),
   ],
 };

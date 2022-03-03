@@ -11,16 +11,16 @@
     <% } %>
   </head>
   <body>
-    <div id="root" class="root"></div>
-    <% for (var js in htmlWebpackPlugin.files.js) { %>
-      <% if (!htmlWebpackPlugin.files.js[js].includes('fonts') && !htmlWebpackPlugin.files.js[js].includes('rs-frontend')) { %>
-        <link rel="preload" as="script" href="<%= htmlWebpackPlugin.files.js[js] %>" onload="const script = document.createElement('script'); script.src = this.href; document.body.appendChild(script);">
-      <% } %>
-    <% } %>
-    <% for (var css in htmlWebpackPlugin.files.css) { %>
-      <% if (htmlWebpackPlugin.files.css[css].includes('app')) { %>
-        <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.css[css] %>" />
-      <% } %>
-    <% } %>
+  <div id="root" class="root"></div>
+  <% for (var js in htmlWebpackPlugin.files.js) { %>
+  <link as="script" href="<%= htmlWebpackPlugin.files.js[js] %>"
+        onload="const script = document.createElement('script'); script.src = this.href; document.body.appendChild(script);"
+        rel="preload">
+  <% } %>
+  <% for (var css in htmlWebpackPlugin.files.css) { %>
+  <% if (htmlWebpackPlugin.files.css[css].includes('app')) { %>
+  <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.css[css] %>" />
+  <% } %>
+  <% } %>
   </body>
 </html>

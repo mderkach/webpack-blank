@@ -9,7 +9,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.NODE_ENV === 'development',
   // eslint-disable-next-line import/no-dynamic-require
   require(resolveApp('package.json')).homepage,
-  process.env.PUBLIC_URL
+  process.env.PUBLIC_URL ?? '.'
 );
 
 const moduleFileExtensions = [

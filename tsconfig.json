@@ -23,7 +23,10 @@
     "baseUrl": "./src",
     "paths": {
       "assets/*": [
-        "../assets/*"
+        "assets/*"
+      ],
+      "scss/*": [
+        "scss/*"
       ]
     },
     "types": ["webpack-env", "node"]

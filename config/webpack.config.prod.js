@@ -9,14 +9,6 @@ const prodWebpackConfig = merge(BaseConfig, {
   mode: 'production',
   bail: true,
   devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.(gif|png|jpe?g|webp)$/i,
-        type: 'asset',
-      },
-    ],
-  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: `./assets/css/[name].[fullhash:8].css`,
@@ -81,14 +73,14 @@ const prodWebpackConfig = merge(BaseConfig, {
         },
         generator: [
           {
-            type: 'asset',
+            preset: 'webp',
             implementation: ImageMinimizerPlugin.imageminGenerate,
             options: {
               plugins: ['imagemin-webp'],
             },
           },
           {
-            type: 'asset',
+            preset: 'avif',
             implementation: ImageMinimizerPlugin.imageminGenerate,
             options: {
               plugins: ['imagemin-avif'],

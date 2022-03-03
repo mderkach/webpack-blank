@@ -1,7 +1,9 @@
-const { merge } = require('webpack-merge');
+const {merge} = require('webpack-merge');
+const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const BaseConfig = require('./webpack.config');
-const { dist } = require('./constants');
+const {dist, publicUrlOrPath, src} = require('./constants');
+const getHttpsConfig = require('./webpack.config.https');
 
 const devWebpackConfig = merge(BaseConfig, {
   // DEV config
@@ -14,11 +16,27 @@ const devWebpackConfig = merge(BaseConfig, {
   devServer: {
     open: false,
     hot: false,
+    compress: true,
     static: {
       directory: dist,
+      publicPath: [publicUrlOrPath],
+      watch: {
+        ignored: ignoredFiles(src),
+      },
+    },
+    devMiddleware: {
+      // It is important to tell WebpackDevServer to use the same "publicPath" path as
+      // we specified in the webpack config. When homepage is '.', default to serving
+      // from the root.
+      // remove last slash so user can land on `/test` instead of `/test/`
+      publicPath: publicUrlOrPath.slice(0, -1),
     },
     port: 8080,
-    historyApiFallback: true,
+    https: process.env.HTTPS && getHttpsConfig(),
+    historyApiFallback: {
+      disableDotRule: true,
+      index: publicUrlOrPath,
+    },
     client: {
       overlay: {
         errors: true,
