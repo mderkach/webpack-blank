@@ -1,7 +1,7 @@
 // fix sass deprecation warn
 
-@use 'sass:math';
-@use 'sass:map';
+@use 'sass:math' as math;
+@use 'sass:map' as map;
 
 @function divide($dividend, $divisor, $precision: 10) {
   $sign: if($dividend > 0 and $divisor > 0 or $dividend < 0 and $divisor < 0, 1, -1);
@@ -36,6 +36,7 @@
     $factor: $factor * 0.1;
     $remainder: $remainder * 10;
     $precision: $precision - 1;
+
     @if $precision < 0 and $remainder >= $divisor * 5 {
       $result: $result + 1;
     }

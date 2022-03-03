@@ -1,5 +1,5 @@
 @use './pseudo' as *;
-@use 'scss:math';
+@use 'sass:math' as math;
 
 @mixin triangle($color, $direction, $size: 6px, $position: absolute, $round: false, $roundRadius: 3px) {
   @include pseudo($pos: $position);
@@ -7,25 +7,25 @@
     border-radius: $roundRadius;
   }
   @if $direction == down {
+    margin-top: 0 - math.round($size / 2.5);
     border-top: $size solid $color;
     border-right: $size solid transparent;
     border-left: $size solid transparent;
-    margin-top: 0 - math.round($size / 2.5);
   } @else if $direction == up {
-    border-left: $size solid transparent;
+    margin-bottom: 0 - math.round($size / 2.5);
     border-right: $size solid transparent;
     border-bottom: $size solid $color;
-    margin-bottom: 0 - math.round($size / 2.5);
+    border-left: $size solid transparent;
   } @else if $direction == right {
+    margin-right: -$size;
     border-top: $size solid transparent;
     border-bottom: $size solid transparent;
     border-left: $size solid $color;
-    margin-right: -$size;
   } @else if $direction == left {
-    border-top: $size solid transparent;
-    border-bottom: $size solid transparent;
-    border-right: $size solid $color;
     margin-left: -$size;
+    border-top: $size solid transparent;
+    border-right: $size solid $color;
+    border-bottom: $size solid transparent;
   }
 
   width: 0;

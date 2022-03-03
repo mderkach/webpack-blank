@@ -8,8 +8,8 @@
 
 // Configuration
 
-@use 'sass:math';
-@use 'sass:meta';
+@use 'sass:math' as math;
+@use 'sass:meta' as meta;
 @use '../functions/divide' as *;
 
 $rfs-base-value: 1.25rem !default;
