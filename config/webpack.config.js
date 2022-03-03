@@ -3,15 +3,14 @@ const fs = require('fs');
 const resolve = require('resolve');
 // const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const localIdent = require('./css.modules.config');
 const {
   src,
   dist,
-  assets,
   webpackCache,
   jsConfig,
   tsConfig,
@@ -21,6 +20,7 @@ const {
   appPath,
   tsBuildInfoFile,
   entry,
+  svgo,
 } = require('./constants');
 const modules = require('./webpack.config.modules');
 const styleLoaders = require('./webpack.config.styles');
@@ -35,6 +35,7 @@ const env = getClientEnvironment(publicUrlOrPath.slice(0, -1));
 // const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+const svgSpriteRegex = /(icon-).*(.svg)(\?.*)?$/;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -45,8 +46,8 @@ module.exports = {
   },
   output: {
     path: dist,
-    filename: './assets/js/[name].[fullhash:8].js',
-    chunkFilename: './assets/js/[name].[fullhash:8].chunk.js',
+    filename: 'assets/js/[name].[fullhash:8].js',
+    chunkFilename: 'assets/js/[name].[fullhash:8].chunk.js',
     publicPath: publicUrlOrPath,
     clean: true,
     assetModuleFilename: (module) => {
@@ -99,59 +100,22 @@ module.exports = {
         type: 'asset',
       },
       {
-        test: /\.(svg)$/,
-        // type: 'asset/resource',
+        test: svgSpriteRegex,
         use: [
           {
             loader: 'svg-sprite-loader',
             options: {
               extract: true,
-              publicPath: `${assets}/img/svg/`,
-              spriteFilename: 'sprite.svg',
-            },
-          },
-          {
-            loader: 'svgo-loader',
-            options: {
-              plugins: [
-                'removeDoctype',
-                'removeXMLProcInst',
-                'removeComments',
-                'removeMetadata',
-                'removeEditorsNSData',
-                'cleanupAttrs',
-                'mergeStyles',
-                'inlineStyles',
-                'minifyStyles',
-                'cleanupIDs',
-                'removeUselessDefs',
-                'cleanupNumericValues',
-                'convertColors',
-                'removeUnknownsAndDefaults',
-                'removeNonInheritableGroupAttrs',
-                'removeUselessStrokeAndFill',
-                'removeViewBox',
-                'cleanupEnableBackground',
-                'removeHiddenElems',
-                'removeEmptyText',
-                'convertShapeToPath',
-                'convertEllipseToCircle',
-                'moveElemsAttrsToGroup',
-                'moveGroupAttrsToElems',
-                'collapseGroups',
-                'convertPathData',
-                'convertTransform',
-                'removeEmptyAttrs',
-                'removeEmptyContainers',
-                'mergePaths',
-                'removeUnusedNS',
-                'sortDefsChildren',
-                'removeTitle',
-                'removeDesc',
-              ],
+              publicPath: `./assets/icons/`,
             },
           },
           'svg-transform-loader',
+          {
+            loader: 'svgo-loader',
+            options: {
+              configFile: svgo,
+            },
+          },
         ],
       },
       {
@@ -190,7 +154,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new SpriteLoaderPlugin({ plainSprite: true }),
     new HtmlWebpackPlugin({
       inject: false,
       template: `${src}/index.html`,
@@ -271,6 +234,9 @@ module.exports = {
       cacheLocation: path.resolve(nodeModules, '.cache/.stylelintcache'),
       cwd: appPath,
       resolvePluginsRelativeTo: __dirname,
+    }),
+    new SpriteLoaderPlugin({
+      plainSprite: true,
     }),
     // use it if you need to handle files without webpack
     // new CopyPlugin({

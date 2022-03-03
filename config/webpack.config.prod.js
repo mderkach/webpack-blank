@@ -11,8 +11,8 @@ const prodWebpackConfig = merge(BaseConfig, {
   devtool: 'source-map',
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `./assets/css/[name].[fullhash:8].css`,
-      chunkFilename: `./assets/css/[name]-chunk.[fullhash:8].css`,
+      filename: `assets/css/[name].[fullhash:8].css`,
+      chunkFilename: `assets/css/[name]-chunk.[fullhash:8].css`,
     }),
   ],
   optimization: {

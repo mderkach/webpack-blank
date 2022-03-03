@@ -2,12 +2,16 @@ import React from 'react';
 import avif from 'assets/img/1.png?as=avif';
 import webp from 'assets/img/1.png?as=webp';
 import png from 'assets/img/1.png';
+import logo from 'assets/icons/icon-liga.svg?sprite';
 import styles from './App.module.scss';
 
 export function App() {
   return (
     <div className={styles.cls}>
       <p>webpack starter template ITSM</p>
+      <svg viewBox={logo.viewBox}>
+        <use href={logo.url} />
+      </svg>
       <picture>
         <source srcSet={avif} type="image/avif" />
         <source srcSet={webp} type="image/webp" />
