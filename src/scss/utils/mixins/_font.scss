@@ -1,5 +1,7 @@
 // Default: For modern format fonts
-// Files Required: .woff, .woffs
+// Files Required: .woff2
+// resolve-url-loader without files breaks webpack, ensure you have them
+// you can manually add another formats
 
 @mixin font-face(
   $font-family,
@@ -11,7 +13,8 @@
   @font-face {
     font-weight: $weight;
     font-style: $style;
-    font-family: $font-family;
-    src: url('#{$file-path}.woff') format('woff'), url('#{$file-path}.woff2') format('woff2');
+    font-family: '#{$file-path}.woff2';
+    src: url('#{$file-path}.woff2') format('woff2');
+    font-display: swap;
   }
 }

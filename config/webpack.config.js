@@ -165,11 +165,12 @@ module.exports = {
             importLoaders: 3,
             sourceMap: true,
             modules: {
-              mode: 'icss'
+              mode: 'icss',
             },
           },
           'sass-loader'
         ),
+        sideEffects: true,
       },
       {
         test: sassModuleRegex,

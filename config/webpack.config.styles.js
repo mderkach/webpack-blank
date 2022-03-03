@@ -41,7 +41,7 @@ module.exports = function (cssOptions, preProcessor) {
           loader: require.resolve('resolve-url-loader'),
           options: {
             sourceMap: true,
-            root: src,
+            root: src
           },
         },
         {
