@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
+const expand = require('dotenv-expand');
 const paths = require('./constants');
-
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./constants')];
 
-const { NODE_ENV } = process.env;
+const {NODE_ENV} = process.env;
 if (!NODE_ENV) {
   throw new Error('The NODE_ENV environment variable is required but was not specified.');
 }
@@ -28,13 +29,10 @@ const dotenvFiles = [
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
-    // eslint-disable-next-line global-require
-    require('dotenv-expand')(
-      // eslint-disable-next-line global-require
-      require('dotenv').config({
-        path: dotenvFile,
-      })
-    );
+    const config = dotenv.config({
+      path: dotenvFile,
+    });
+    expand.expand(config);
   }
 });
 
@@ -56,7 +54,7 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in webpack configuration.
-const REACT_APP = /^REACT_APP_/i;
+const REACT_APP = /^APP_/i;
 
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
@@ -67,6 +65,9 @@ function getClientEnvironment(publicUrl) {
         return env;
       },
       {
+        HTTPS: process.env.HTTPS || 'false',
+        SSL_CRT_FILE: process.env.SSL_CRT_FILE || '',
+        SSL_KEY_FILE: process.env.SSL_KEY_FILE || false,
         // Useful for determining whether we’re running in production mode.
         // Most importantly, it switches React into the correct mode.
         NODE_ENV: process.env.NODE_ENV || 'development',
@@ -95,7 +96,6 @@ function getClientEnvironment(publicUrl) {
       return env;
     }, {}),
   };
-
   return { raw, stringified };
 }
 

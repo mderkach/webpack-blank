@@ -37,7 +37,7 @@ const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 const svgSpriteRegex = /(icon-).*(.svg)(\?.*)?$/;
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = env.raw.NODE_ENV === 'production';
 
 module.exports = {
   target: ['browserslist'],
