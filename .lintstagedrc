@@ -1,8 +1,8 @@
 {
   "src/**/*.{ts,tsx}": [
-    "eslint --cache --fix"
+    "eslint --cache --cache-location node_modules/.cache/.eslintcache --fix"
   ],
   "src/**/*.{css,scss,sass}": [
-    "stylelint --cache --fix"
+    "stylelint --cache --cache-location node_modules/.cache/.stylelintcache --fix"
   ]
 }
